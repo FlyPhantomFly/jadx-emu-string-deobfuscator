@@ -202,7 +202,33 @@ class StringDecryptor(
 
     private fun foldable(callee: DexMethod, args: List<Any?>): Boolean {
         val target = resolveTarget(callee, args)
-        return isDecoderMethod(target) && !isStateful(target)
+        if (!isDecoderMethod(target)) return false
+        return !isStateful(target) || !writesStaticState(target, args)
+    }
+
+    private fun writesStaticState(m: DexMethod, args: List<Any?>): Boolean {
+        if (args.any { it is UnknownVal }) return true
+        var written = false
+        val hook = object : ExecHook {
+            private var clinitDepth = 0
+
+            override fun onEnter(method: DexMethod, frame: Frame) {
+                if (method.ref.name == "<clinit>") clinitDepth++
+            }
+
+            override fun onExit(method: DexMethod) {
+                if (method.ref.name == "<clinit>") clinitDepth--
+            }
+
+            override fun onStep(method: DexMethod, insn: DalvikInsn, frame: Frame, pc: Int) {
+                if (written || clinitDepth > 0 || insn.opcode != Opcode.SPUT) return
+                val fr = insn.ref as? FieldRef ?: return
+                if (source.classInfo(fr.declClass) != null && fr.key !in lazyInitFields(method)) written = true
+            }
+        }
+        val vm = ctx.newVm(limits, hook = hook)
+        runCatching { vm.invoke(m, args) }
+        return written
     }
 
     private val statefulCache = HashMap<String, Boolean>()
