@@ -500,7 +500,7 @@ class StringDecryptor(
 
     private fun runCallee(callee: DexMethod, args: List<Any?>, callerDecl: String): Any? {
         val vm = ctx.newVm(limits)
-        vm.android.syntheticCaller = callerDecl.removePrefix("L").removeSuffix(";").replace('/', '.')
+        vm.syntheticCaller = callerDecl.removePrefix("L").removeSuffix(";").replace('/', '.')   // was vm.android.syntheticCaller; the android field was removed in ba65619, syntheticCaller is now directly on Vm
         return runCatching { vm.invoke(callee, args) }.getOrNull()
     }
 

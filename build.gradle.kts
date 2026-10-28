@@ -4,7 +4,7 @@ plugins {
     kotlin("jvm") version "2.3.10"
 }
 
-version = "0.0.3"
+version = "0.0.4"
 
 repositories {
     mavenLocal()
@@ -13,7 +13,7 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.github.nitanmarcel:jadx-emu:0.1.0-beta.6")
+    compileOnly("io.github.flyphantomfly:jadx-emu:0.2.0")
 
     compileOnly("io.github.skylot:jadx-core:1.5.6")
     compileOnly(kotlin("stdlib"))
