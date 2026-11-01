@@ -1,13 +1,7 @@
 jadx-emu-string-deobfuscator
-============================
 
-A fork of jadx-emu-string-deobfuscator
-(https://github.com/nitanmarcel/jadx-emu-string-deobfuscator).
-It links the jadx-emu engine (io.github.flyphantomfly:jadx-emu), licensed under the
-GNU General Public License, version 2; this project is therefore also distributed
-under GPLv2 (see LICENSE).
+A fork of nitanmarcel's jadx-emu-string-deobfuscator (https://github.com/nitanmarcel/jadx-emu-string-deobfuscator), an extension for jadx-emu (https://github.com/FlyPhantomFly/jadx-emu). It links against the jadx-emu engine (io.github.flyphantomfly:jadx-emu), which is licensed under the GNU General Public License version 2, so this project is distributed under GPLv2 as well. See LICENSE.
 
-Original work copyright its respective authors.
-Modifications copyright (C) 2026 FlyPhantomFly.
+Original work is copyright its respective authors. Modifications are copyright (C) 2026 FlyPhantomFly.
 
-Free software under GPLv2, WITHOUT ANY WARRANTY. See LICENSE for the full text.
+Free software under GPLv2, without any warranty. See LICENSE for the full text.
